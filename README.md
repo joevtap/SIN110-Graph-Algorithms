@@ -1,9 +1,12 @@
 # SIN110 Graph Algorithms
 This repository contains homeworks and projects created during the Graph Algorithms course taught by [Professor Frinhani](http://lattes.cnpq.br/4014098839714534) at UNIFEI
 
+> [Click here to get to the completed homework table](#-completed-homework-and-projects)
+
 ## 📃 Index
 - [Introduction](#-introduction)
 - [How this repository is organized](#-how-this-repository-is-organized)
+- [Completed homework and projects](#-completed-homework-and-projects)
 - [How you can contribute (currently you cannot)](#-how-this-repository-is-organized)
 - [Roadmap](#%EF%B8%8F-roadmap)
 - [Projects of personal interest](#-projects-of-personal-interest)
@@ -21,6 +24,12 @@ That said, this repository will also contain personal projects that correlate wi
 - Each branch will contain a README.md file describing the process I went through
 - This file will also include my difficulties doing homework and what I did to overcome them
 - There will also be a .pdf version
+
+## ✅ Completed homework and projects
+
+|Name|URL|
+|---|---|
+|Tarefa 00|https://github.com/joevtap/SIN110-Graph-Algorithms/tree/tarefa00|
 
 ## 🤝 How you can contribute to this repository
 
