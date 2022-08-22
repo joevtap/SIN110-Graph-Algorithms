@@ -20,7 +20,7 @@ That said, this repository will also contain personal projects that correlate wi
 
 ## 📌 How this repository is organized
 
-- Every homework or project will have it branch
+- Every homework or project will have it own branch
 - Each branch will contain a README.md file describing the process I went through
 - This file will also include my difficulties doing homework and what I did to overcome them
 - There will also be a .pdf version
