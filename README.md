@@ -1,5 +1,5 @@
 # SIN110 Graph Algorithms
-This repository contains homeworks and projects created during the Graph Algorithms course taught by [Professor Frinhani](http://lattes.cnpq.br/4014098839714534) at UNIFEI
+This repository contains homework and projects created during the Graph Algorithms course taught by [Professor Frinhani](http://lattes.cnpq.br/4014098839714534) at UNIFEI
 
 > [Click here to get to the completed homework table](#-completed-homework-and-projects)
 
