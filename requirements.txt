@@ -1,0 +1,4 @@
+igraph==0.9.11
+numpy==1.23.2
+pycairo==1.21.0
+texttable==1.6.4
