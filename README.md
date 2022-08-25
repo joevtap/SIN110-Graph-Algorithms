@@ -3,7 +3,7 @@
 > Joel Vítor Torres de Andrade Pinto (2021003527)  
 > Sistemas de Informação 
 > 
-> Data de entrega: 24/08
+> Data máxima de entrega: 29/08
 
 **Para acessar o código disponível no github [clique aqui](https://github.com/joevtap/SIN110-Graph-Algorithms/tree/tarefa00)**
 
