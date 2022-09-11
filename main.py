@@ -1,33 +1,23 @@
 import sys
 from Read import read_instance
-from Output import output_results
+from Initialize import create_igraph_graph
+from Initialize import visualize_graph
 
 
-# Arguments: [1]Datasets located in 'instances' directory (e.g. 'exemplo,zachary' without quotation marks)
-def main():
-    datasets: str = sys.argv[1]
-
-    # The dataset argument is converted to a list, then I iterate over it
+def main(datasets: str):
     for dataset in datasets.split(','):
-        # read_instance() function returns a tuple containing the read matrix, and it's shape
-        matrix, shape = read_instance(dataset)
+        matrix, _ = read_instance(dataset)
+        print(matrix, end='\n\n')
 
-        # The shape itself is a tuple (nrows, ncols)
-        nrows, ncols = shape
+        graph = create_igraph_graph(matrix)
+        print(graph, end='\n\n')
 
-        result = f'{dataset};{nrows};{ncols}'
-
-        # Here I reformatted the result string to print it to the terminal
-        print(result.replace(';', ' = ', 1).replace(';', ' '))
-
-        # output_results() function takes a list of strings.
-        # Those are going to be appended to a file of the given format
-        output_results([result], 'results.csv')
+        visualize_graph(graph)
 
 
 if __name__ == '__main__':
     try:
-        main()
+        main(sys.argv[1])
     except IndexError:  # This means the program read an out of index value
         print('Execute this script providing the required arguments')
     except FileNotFoundError:  # This means the program couldn't find the file because of it's name or format
