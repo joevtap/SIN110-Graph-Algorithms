@@ -29,7 +29,8 @@ That said, this repository will also contain personal projects that correlate wi
 
 |Name|URL|
 |---|---|
-|Tarefa 00|https://github.com/joevtap/SIN110-Graph-Algorithms/tree/tarefa00|
+|ATV 1|https://github.com/joevtap/SIN110-Graph-Algorithms/tree/tarefa00|
+|ATV 3|https://github.com/joevtap/SIN110-Graph-Algorithms/tree/tarefa02|
 
 ## 🤝 How you can contribute to this repository
 
