@@ -1,92 +1,110 @@
 # Algoritmos e Grafos - Relatório de atividade
-## Atividade 1 - Preparação do ambiente para atividades 
+## Atividade 3 - Grafos, tipos e representações
+
 > Joel Vítor Torres de Andrade Pinto (2021003527)  
 > Sistemas de Informação 
 > 
-> Data máxima de entrega: 29/08
+> Data máxima de entrega: 12/09
 
-**Para acessar o código disponível no github [clique aqui](https://github.com/joevtap/SIN110-Graph-Algorithms/tree/tarefa00)**
+**Para acessar o código disponível no github [clique aqui](https://github.com/joevtap/SIN110-Graph-Algorithms/tree/tarefa02).**
 
 ______________________________
 
-A atividade consiste na elaboração de um código que seja capaz
-de ler um arquivo armazenando uma instância, contabilizar a quantidade de linhas e colunas da última
-e, então, mostrar essa informação no terminal, também armazenando o resultando em um arquivo.
+A atividade consiste na elaboração de métodos para criação e manipulação de grafos, isso a partir de uma matriz de adjacências.
 
-Usei a biblioteca **Numpy**, a qual possui métodos especializados para realização desse tipo de atividade.
-
-### Estrutura do repositório
-
-```
-projeto/
-├─ instances/
-├─ Output/
-│  ├─ output_results.py
-├─ Read/
-│  ├─ get_input.py
-├─ main.py
-```
+Usei as bibliotecas **Numpy** e **iGraph**, as quais são especializadas nesse tipo de atividade.
 
 ### Detalhamento do código
 
-```python
-# main.py
-# Os comentários originais foram ocultados para uma melhor visualização
-def main():
-    datasets: str = sys.argv[1]
+O arquivo `main.py` agrupa as chamadas dos métodos criados de modo a apresentar alguns exemplos de manipulação dos datasets.
 
-    # Nesse trecho de código, eu itero pelos nomes das instancias que recebi como parametro
+```python
+def main(datasets: str):
     for dataset in datasets.split(','):
-        # Utilizo as funções que criei para cada instancia
-        matrix, shape = read_instance(dataset)
+        matrix, _ = read_instance(dataset)
+        print(matrix, end='\n\n')
 
-        nrows, ncols = shape
+        graph = create_igraph_graph(matrix)
+        print(graph, end='\n\n')
 
-        result = f'{dataset};{nrows};{ncols}'
+        print('Tipo:', tipoGrafo(matrix))
+        print('Densidade:', calcDensidade(matrix))
 
-        # E faço uma pequena formatação para a apresentação do resultado no terminal
-        print(result.replace(';', ' = ', 1).replace(';', ' '))
-        
-        output_results([result], 'results.csv')
-```
-Se tratando da leitura do arquivo, fiz uma breve pesquisa na documentação do Numpy,
-buscando uma maneira de fazer leitura de arquivos com representações de grafos no formato
-de matriz. Como resultado, encontrei o método np.loadtxt(), usado abaixo.
-```python
-# Read/get_input.py
-# As duas linhas seguintes foram essenciais para a execução da atividade
+        if dataset == 'ponte':
+            print('Ponte: 2 - 3?', verificaAdjacencia(matrix, 2, 3))
+            print('Ponte: 1 - 2?', verificaAdjacencia(matrix, 1, 2))
 
-# O método loadtxt() foi utilizado para ler o arquivo
-# com formato de matriz de adjacência ou incidência
-matrix = np.loadtxt(file_path)
+            ponte_com_4 = insereVertice(matrix, 4)
+            print('Ponte: Inserido vertice com id 4: \n', ponte_com_4)
+            # visualize_graph(create_igraph_graph(ponte_com_4))
 
-# Já o método shape() me retorna uma tupla que representa a forma (nesse caso as dimensões)
-# de um np.array, que no caso armazenou a matriz lida pelo método acima
-matrix_shape = np.shape(matrix)
-```
+            aresta_1_4 = insereAresta(ponte_com_4, 1, 4)
+            print('Ponte: Inserido aresta 1 - 4: \n', aresta_1_4)
+            # visualize_graph(create_igraph_graph(aresta_1_4))
 
-O método np.shape() já era de meu conhecimento, visto que a um tempo atrás explorei um pouco a biblioteca Numpy,
-então foi só uma questão de usá-lo passando a matriz do tipo np.array como parâmetro.
-```python
-# Read/get_input.py
-# Ainda nesse arquivo, eu fiz uma pequena verificação para que pudesse obter
-# as dimensões (nrows e ncols) corretamente
+            sem_aresta_2_3 = removeAresta(matrix, 2, 3)
+            print('Ponte: Removida aresta 2 - 3: \n', sem_aresta_2_3)
+            # visualize_graph(create_igraph_graph(sem_aresta_2_3))
 
-# Caso o tamanho da tupla fosse 1, o np.array se trataria de um array unidimensional
-# e a saída do meu programa não estaria no formato correto. Por isso converti a saída 
-# em uma tupla de tamanho 2, com 1 linha e matriz_shape[0] colunas
-if len(matrix_shape) == 1:
-    return matrix, (1, matrix_shape[0])
+            sem_vertice_2 = removeVertice(matrix, 2)
+            print('Ponte: Removido vertice 2: \n', sem_vertice_2)
+            # visualize_graph(create_igraph_graph(sem_vertice_2))
+
+        if dataset == 'teste_remove':
+            sem_aresta = removeAresta(matrix, 0, 1)
+            # visualize_graph(create_igraph_graph(sem_aresta))
+
+            sem_vertice = removeVertice(matrix, 0)
+            # visualize_graph(create_igraph_graph(sem_vertice))
+
+        # visualize_graph(graph)
 ```
 
-Implementar a parte de leitura foi simples. Fiz uma função que aceita uma lista de strings, caso quisesse
-escrever mais de um dado em uma única execução, e então iterei sobre ela.
-A cada iteração, escrevi o dado em uma linha no arquivo determinado, isso por meio da função open() no modo de leitura **a+**.
+É possível visualizar um grafo ao descomentar as linhas com a chamada da função `visualize_graph()`.
+
+O exemplo abaixo demonstra a exibição das funções de remoção de vértices e arestas em um grafo simples.
+
+![demo_remove](assets/demo_remove.png)
+
+As funções de inserção e remoção foram implementadas em cima de soluções diponibilizadas pela biblioteca **iGraph**, como no exemplo abaixo.
 
 ```python
-# Output/output_results.py
+def removeAresta(matriz, vi, vj):
+    grafo = create_igraph_graph(matriz)
 
-with open(file_path, 'a+') as f:
-    for result in results:
-        f.write(result + '\n')
+    grafo.delete_edges(vi, vj)
+    return grafo.get_adjacency()
+```
+
+Outros exemplos de implementação.
+
+```python
+def calcDensidade(matriz):
+    graph = create_igraph_graph(matriz)
+    v = graph.vcount()
+    e = graph.ecount()
+
+    if tipoGrafo(matriz) == 1:
+        # Directed
+        return round((e / (v * (v - 1))), 3)
+
+    # Undirected
+    return round(((2 * e) / (v * (v - 1))), 3)
+```
+
+```python
+def tipoGrafo(matriz):
+    grafo = create_igraph_graph(matriz)
+
+    if any(grafo.is_loop()):
+        return 3
+
+    if any(grafo.is_multiple()):
+        return 2
+
+    if grafo.is_directed():
+        return 1
+
+    if grafo.is_simple():
+        return 0
 ```

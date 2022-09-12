@@ -2,6 +2,8 @@ import sys
 from Read import read_instance
 from Initialize import create_igraph_graph
 from Initialize import visualize_graph
+from Methods import calcDensidade, tipoGrafo, verificaAdjacencia, insereVertice, insereAresta, removeAresta, \
+    removeVertice
 
 
 def main(datasets: str):
@@ -11,6 +13,36 @@ def main(datasets: str):
 
         graph = create_igraph_graph(matrix)
         print(graph, end='\n\n')
+
+        print('Tipo:', tipoGrafo(matrix))
+        print('Densidade:', calcDensidade(matrix))
+
+        if dataset == 'ponte':
+            print('Ponte: 2 - 3?', verificaAdjacencia(matrix, 2, 3))
+            print('Ponte: 1 - 2?', verificaAdjacencia(matrix, 1, 2))
+
+            ponte_com_4 = insereVertice(matrix, 4)
+            print('Ponte: Inserido vertice com id 4: \n', ponte_com_4)
+            # visualize_graph(create_igraph_graph(ponte_com_4))
+
+            aresta_1_4 = insereAresta(ponte_com_4, 1, 4)
+            print('Ponte: Inserido aresta 1 - 4: \n', aresta_1_4)
+            # visualize_graph(create_igraph_graph(aresta_1_4))
+
+            sem_aresta_2_3 = removeAresta(matrix, 2, 3)
+            print('Ponte: Removida aresta 2 - 3: \n', sem_aresta_2_3)
+            # visualize_graph(create_igraph_graph(sem_aresta_2_3))
+
+            sem_vertice_2 = removeVertice(matrix, 2)
+            print('Ponte: Removido vertice 2: \n', sem_vertice_2)
+            # visualize_graph(create_igraph_graph(sem_vertice_2))
+
+        if dataset == 'teste_remove':
+            sem_aresta = removeAresta(matrix, 0, 1)
+            visualize_graph(create_igraph_graph(sem_aresta))
+
+            sem_vertice = removeVertice(matrix, 0)
+            visualize_graph(create_igraph_graph(sem_vertice))
 
         visualize_graph(graph)
 
