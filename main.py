@@ -1,6 +1,6 @@
 import sys
 from Read import read_instance
-from Initialize import create_igraph_graph
+from Initialize import create_igraph_graph, criaListaAdjacencias
 from Initialize import visualize_graph
 from Methods import calcDensidade, tipoGrafo, verificaAdjacencia, insereVertice, insereAresta, removeAresta, \
     removeVertice
@@ -13,6 +13,8 @@ def main(datasets: str):
 
         graph = create_igraph_graph(matrix)
         print(graph, end='\n\n')
+
+        print(criaListaAdjacencias(matrix))
 
         print('Tipo:', tipoGrafo(matrix))
         print('Densidade:', calcDensidade(matrix))
@@ -39,10 +41,10 @@ def main(datasets: str):
 
         if dataset == 'teste_remove':
             sem_aresta = removeAresta(matrix, 0, 1)
-            visualize_graph(create_igraph_graph(sem_aresta))
+            # visualize_graph(create_igraph_graph(sem_aresta))
 
             sem_vertice = removeVertice(matrix, 0)
-            visualize_graph(create_igraph_graph(sem_vertice))
+            # visualize_graph(create_igraph_graph(sem_vertice))
 
         visualize_graph(graph)
 

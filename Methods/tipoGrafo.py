@@ -1,8 +1,12 @@
+import numpy
+
 from Initialize import create_igraph_graph
 
 
-def tipoGrafo(matriz):
-    grafo = create_igraph_graph(matriz)
+def tipoGrafo(data):
+    if type(data) is numpy.ndarray:
+        global grafo
+        grafo = create_igraph_graph(data)
 
     if any(grafo.is_loop()):
         return 3
