@@ -4,9 +4,13 @@ from Initialize import create_igraph_graph
 
 
 def tipoGrafo(data):
+    global grafo
+
     if type(data) is numpy.ndarray:
-        global grafo
-        grafo = create_igraph_graph(data)
+        grafo = create_igraph_graph(data, data_format='matrix')
+
+    if type(data) is dict:
+        grafo = create_igraph_graph(data, data_format='adj_list')
 
     if any(grafo.is_loop()):
         return 3

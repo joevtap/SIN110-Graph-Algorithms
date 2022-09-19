@@ -1,11 +1,23 @@
+from typing import List, Tuple
 import numpy as np
 import igraph
 
 
-def create_igraph_graph(data, data_format='matrix'):  # Credits to Professor Rafael Frinhani - SIN110
+def delete_returning_edge(dictionary, atuple: Tuple):
+    # Returning edge
+    returning = (atuple[1], atuple[0])
+
+    for key in dictionary:
+        edge_list: List = dictionary[key]
+
+        if edge_list.count(returning[1]) > 0:
+            idx = edge_list.index(returning[1])
+            del edge_list[idx]
+
+def create_igraph_graph(data, data_format='matrix'):
     graph = igraph.Graph()
 
-    if type == data_format:
+    if data_format == 'matrix':  # Credits to Professor Rafael Frinhani - SIN110
         n_vertices = np.shape(data)[0]
         graph.add_vertices(n_vertices)
 
@@ -22,12 +34,19 @@ def create_igraph_graph(data, data_format='matrix'):  # Credits to Professor Raf
     if data_format == 'adj_list':
         n_vertices = len(data)
         graph.add_vertices(n_vertices)
+        graph.vs['label'] = range(0, n_vertices)
 
-        graph.vs['label'] = range(0, graph.vcount())
+        alter = data  # everytime delete_returning_edge runs, the alter dict is going to change
+        for key in alter:
+            origin = key
+            es = []
 
-        # for vi in data:
-        #     for vj in vi:
+            for v in alter[key]:
+                edge = (origin, v)
+                delete_returning_edge(alter, edge)
+                es.append(edge)
 
+            graph.add_edges(es)
 
     return graph
 

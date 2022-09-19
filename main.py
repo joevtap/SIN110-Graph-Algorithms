@@ -11,13 +11,13 @@ def main(datasets: str):
         matrix, _ = read_instance(dataset)
         print(matrix, end='\n\n')
 
-        graph = create_igraph_graph(matrix)
-        print(graph, end='\n\n')
+        adj_list = criaListaAdjacencias(matrix)
+        print(adj_list)
 
-        print(criaListaAdjacencias(matrix))
+        adj_graph = create_igraph_graph(adj_list, data_format='adj_list')
 
-        print('Tipo:', tipoGrafo(matrix))
-        print('Densidade:', calcDensidade(matrix))
+        print('Tipo:', tipoGrafo(adj_list))
+        print('Densidade:', calcDensidade(adj_list))
 
         if dataset == 'ponte':
             print('Ponte: 2 - 3?', verificaAdjacencia(matrix, 2, 3))
@@ -46,7 +46,7 @@ def main(datasets: str):
             sem_vertice = removeVertice(matrix, 0)
             # visualize_graph(create_igraph_graph(sem_vertice))
 
-        visualize_graph(graph)
+        # visualize_graph(adj_graph)
 
 
 if __name__ == '__main__':

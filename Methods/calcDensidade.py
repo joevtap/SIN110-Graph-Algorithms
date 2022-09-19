@@ -1,13 +1,19 @@
+import numpy
+
 from Initialize import create_igraph_graph
 from Methods.tipoGrafo import tipoGrafo
 
 
-def calcDensidade(matriz):
-    graph = create_igraph_graph(matriz)
+def calcDensidade(data):
+    data_format = 'adj_list' if type(data) is dict else 'matrix'
+    graph = create_igraph_graph(data, data_format=data_format)
+
     v = graph.vcount()
     e = graph.ecount()
 
-    if tipoGrafo(matriz) == 1:
+    print(v, e)
+
+    if tipoGrafo(data) == 1:
         # Directed
         return round((e / (v * (v - 1))), 3)
 
